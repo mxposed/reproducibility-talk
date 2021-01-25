@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; frame-src https://github.com"> -->
 
         <title>reveal.js</title>
 
@@ -13,6 +14,10 @@
         <!-- Theme used for syntax highlighted code -->
         <link rel="stylesheet" href="reveal.js/plugin/highlight/zenburn.css" id="highlight-theme">
         <style type="text/css">
+        .reveal-viewport {
+            background: #ebf3f8;
+            background-color: #ebf3f8;
+        }
         .reveal small {font-size: 0.4em;}
         .reveal table td {border-right: 1px solid}
         .reveal table td:last-child {border-right: none}
@@ -79,8 +84,9 @@
         <div class="reveal">
             <div class="slides">
 <section>
-    <h3>Reproducibility</h3>
-    <small>Nick Markov 1/25/2021</small>
+    <h3>Introduction to reproducible computing for biologists</h3>
+    <br/>
+    Nick Markov 1/25/2021
 
     <!-- <small>
         What we will cover:<br/>
@@ -208,14 +214,14 @@
 project-1/
   code/
     01nasal-epithelium/
-  data/
+  results/
     01nasal-epithelium/
-  raw/
+  data/
     201211_A00749_0168_AHWY37DRXX/
 project-2/
   code/
-  results/
   data/
+  raw/
 project-3/
   201105_bulk_analysis_batch1/
   201111_bulk_analysis_batch2/
@@ -250,7 +256,7 @@ project-3/
     </section>
     <section>
         <h4>Record everything for future archaeologists</h4>
-        <iframe data-src="https://github.com/NUPulmonary/isrib/issues/16"></iframe>
+        <a href="https://github.com/NUPulmonary/isrib/issues/16">NUPulmonary/isrib/issues/16</a>
     </section>
 </section>
 <section>
@@ -319,6 +325,102 @@ rule loading_factors:
     </ul>
 </section>
 <section>
+    <section>
+        <h4>Random seed</h4>
+        <img src="SSc_C1-umap-0.png" width="400"/><img src="SSc_C1-umap-40.png" width="400"/><br/>
+        <pre><code data-trim data-noescape>
+scanpy.tl.umap(adata) # left
+scanpy.tl.umap(adata, random_state=40) # right
+        </code></pre>
+    </section>
+    <section>
+        <h4>Random seed. What to do?</h4>
+        <ul>
+            <li>When doing analysis, check different seeds</li>
+            <li>Choose one and set it via parameter</li>
+            <li>Or with <code>set.seed()</code> function in R</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>External code</h4>
+        <ul>
+            <li>R/python packages, other packages or libraries</li>
+            <li>Packages have versions</li>
+            <li>Packages have dependencies</li>
+        </ul>
+    </section>
+    <section>
+        <h4>Dependency graph</h4>
+        <img src="ggplot2-deps.png"/>
+    </section>
+    <section>
+        <h4>Session info</h4>
+        <img src="session-info1.png"/><br/>
+        <img src="session-info2.png"/>
+    </section>
+    <section>
+        <h4>Environments</h4>
+        Package installation space per project<br/>
+        <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a> for R<br/>
+        <a href="https://pipenv.pypa.io/">pipenv</a> for python
+    </section>
+    <section>
+        <h4>Containers</h4>
+        Singularity or Docker<br/>
+        <ul>
+            <li>images of whole operating system with everything you need for your task</li>
+            <li>remember USB sticks you could boot from?</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>Your code</h4>
+        Git<br/>
+        <ul>
+            <li>history of changes</li>
+            <li>forces you to describe changes with short messages</li>
+            <li>you are responsible</li>
+        </ul>
+        Use it from<br/>
+        <ul>
+            <li>command line</li>
+            <li>code editor</li>
+            <li>github application</li>
+        </ul><br/>
+        Host repository on github
+    </section>
+    <section>
+        <h4>History of changes</h4>
+        <a href="https://github.com/NUPulmonary/SSc-v2/commits/master">NUPulmonary/SSc-v2/commits/master</a>
+    </section>
+    <section>
+        <h4>GitHub</h4>
+        <ul>
+            <li>view history</li>
+            <li>issues / tasks</li>
+            <li>wiki / documentation</li>
+            <li>collaboration / exchange point</li>
+            <li>publishing</li>
+        </ul><br/>
+        <a href="https://github.com/NUPulmonary/SSc-v2">Example</a>
+    </section>
+    <section>
+        <h4>Code notebooks</h4>
+        <ul>
+            <li>R markdown (Rmd) or Jupyter (for python) notebooks</li>
+            <li>combine code, text and plots</li>
+            <li>readable logic flow for code</li>
+            <li>interactive plots</li>
+        </ul><br/>
+        <a href="https://nbviewer.jupyter.org/github/NUPulmonary/scarches-covid-reference/blob/master/main.ipynb">scarches</a><br/>
+        <a href="https://nbviewer.jupyter.org/github/ivirshup/constclust_supp/blob/master/pbmc/pbmc-overview.ipynb">constclust</a><br/>
+        <small>Virshup <i>et al.</i>, 2021</small>
+    </section>
+</section>
+<section>
     <h4>Tips on how to approach reproducibility<br/>Pt 2: code</h4>
     <ul>
         <li>Record environment</li>
@@ -329,8 +431,8 @@ rule loading_factors:
     </ul>
 </section>
 <section>
-    <h4>Tips on how to approach reproducibility<br/>Pt 2: code</h4>
-    Examples
+    <h4>Our small collection of scripts</h4>
+    <a href="https://github.com/NUPulmonary/utils">https://github.com/NUPulmonary/utils</a>
 </section>
 <section>Further reading<br/>
     <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Ten Simple Rules for Reproducible Computational Research</a><br/>
@@ -349,6 +451,9 @@ rule loading_factors:
             // - https://revealjs.com/config/
             Reveal.initialize({
                 hash: true,
+                controlsTutorial: false,
+                slideNumber: "c/t",
+                transition: "none",
 
                 // Learn about plugins: https://revealjs.com/plugins/
                 plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
